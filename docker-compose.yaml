@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  web:
+    image: httpd:alpine
+    ports:
+      - 8080:80
+    volumes:
+      - '$PWD/newman:/usr/local/apache2/htdocs/'
+
+  newman:
+    image: postman/newman_alpine33
+    volumes:
+      - '$PWD:/etc/newman'
+    command: ['run', 'collections/sample-collection.json', '--reporters', 'cli,html']
